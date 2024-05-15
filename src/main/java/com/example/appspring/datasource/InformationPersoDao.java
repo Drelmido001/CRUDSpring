@@ -19,7 +19,7 @@ public class InformationPersoDao {
     public void create(informationperso informationPerso) throws SQLException {
         String query = "INSERT INTO information_perso (fullname, email) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, informationPerso.getFullname());
+            statement.setString(1, informationPerso.getFullName());
             statement.setString(2, informationPerso.getEmail());
             statement.executeUpdate();
         }
@@ -33,7 +33,7 @@ public class InformationPersoDao {
                 if (resultSet.next()) {
                     informationperso informationPerso = new informationperso();
                     informationPerso.setId_info(resultSet.getInt("id_info"));
-                    informationPerso.setFullname(resultSet.getString("fullname"));
+                    informationPerso.setFullName(resultSet.getString("fullname"));
                     informationPerso.setEmail(resultSet.getString("email"));
                     return informationPerso;
                 }
@@ -50,7 +50,7 @@ public class InformationPersoDao {
             while (resultSet.next()) {
                 informationperso informationPerso = new informationperso();
                 informationPerso.setId_info(resultSet.getInt("id_info"));
-                informationPerso.setFullname(resultSet.getString("fullname"));
+                informationPerso.setFullName(resultSet.getString("fullname"));
                 informationPerso.setEmail(resultSet.getString("email"));
                 informationPersos.add(informationPerso);
             }
@@ -61,7 +61,7 @@ public class InformationPersoDao {
     public void update(informationperso informationPerso) throws SQLException {
         String query = "UPDATE information_perso SET fullname = ?, email = ? WHERE id_info = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, informationPerso.getFullname());
+            statement.setString(1, informationPerso.getFullName());
             statement.setString(2, informationPerso.getEmail());
             statement.setInt(3, informationPerso.getId_info());
             statement.executeUpdate();
@@ -76,4 +76,3 @@ public class InformationPersoDao {
         }
     }
 }
-

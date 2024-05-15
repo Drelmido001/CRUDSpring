@@ -7,8 +7,8 @@ public class informationperso {
 
     public informationperso() {}
 
-    public informationperso(String fullname, String email) {
-        this.fullName = fullname;
+    public informationperso(String fullName, String email) {
+        this.fullName = fullName;
         this.email = email;
     }
 
@@ -20,12 +20,12 @@ public class informationperso {
         this.id_info = id_info;
     }
 
-    public String getFullname() {
+    public String getFullName() {
         return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullName = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -40,7 +40,7 @@ public class informationperso {
     public String toString() {
         return "InformationPerso{" +
                 "id_info=" + id_info +
-                ", fullname='" + fullName + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

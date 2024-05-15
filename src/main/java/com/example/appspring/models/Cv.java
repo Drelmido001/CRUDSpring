@@ -5,15 +5,45 @@ import java.util.List;
 public class Cv {
     private int id;
     private String profile;
-    private int id_info;
+    private informationperso informationPerso; // Ajout d'un attribut pour les informations personnelles
+    private List<Competence> competences; // Ajout d'un attribut pour les compétences
+    private List<Entreprise> entreprises; // Ajout d'un attribut pour les entreprises
 
     public Cv() {}
 
-    public Cv(String profile, int id_info) {
+    public Cv(String profile, informationperso informationPerso, List<Competence> competences, List<Entreprise> entreprises) {
         this.profile = profile;
-        this.id_info = id_info;
+        this.informationPerso = informationPerso;
+        this.competences = competences;
+        this.entreprises = entreprises;
     }
 
+    // Getters et setters pour les nouveaux attributs
+    public informationperso getInformationPerso() {
+        return informationPerso;
+    }
+
+    public void setInformationPerso(informationperso informationPerso) {
+        this.informationPerso = informationPerso;
+    }
+
+    public List<Competence> getCompetences() {
+        return competences;
+    }
+
+    public void setCompetences(List<Competence> competences) {
+        this.competences = competences;
+    }
+
+    public List<Entreprise> getEntreprises() {
+        return entreprises;
+    }
+
+    public void setEntreprises(List<Entreprise> entreprises) {
+        this.entreprises = entreprises;
+    }
+
+    // Reste du code inchangé
     public int getId() {
         return id;
     }
@@ -30,20 +60,14 @@ public class Cv {
         this.profile = profile;
     }
 
-    public int getId_info() {
-        return id_info;
-    }
-
-    public void setId_info(int id_info) {
-        this.id_info = id_info;
-    }
-
     @Override
     public String toString() {
-        return "CV{" +
+        return "Cv{" +
                 "id=" + id +
                 ", profile='" + profile + '\'' +
-                ", id_info=" + id_info +
+                ", informationPerso=" + informationPerso +
+                ", competences=" + competences +
+                ", entreprises=" + entreprises +
                 '}';
     }
 }

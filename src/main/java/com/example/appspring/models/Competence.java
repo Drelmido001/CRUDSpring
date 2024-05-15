@@ -4,12 +4,9 @@ public class Competence {
     private int competanceId;
     private String competanceName;
 
-    public Competence() {}
+    // Constructeurs
 
-    public Competence(String competanceName) {
-        this.competanceName = competanceName;
-    }
-
+    // Getters et Setters
     public int getCompetanceId() {
         return competanceId;
     }
@@ -25,6 +22,8 @@ public class Competence {
     public void setCompetanceName(String competanceName) {
         this.competanceName = competanceName;
     }
+
+    // Autres méthodes
 
     @Override
     public String toString() {

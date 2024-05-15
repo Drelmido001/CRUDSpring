@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
 @Service
 public class EntrepriseService {
     private EntrepriseDao entrepriseDao;
@@ -35,4 +36,3 @@ public class EntrepriseService {
         entrepriseDao.delete(id);
     }
 }
-

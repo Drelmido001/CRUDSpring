@@ -6,19 +6,22 @@ import com.example.appspring.services.EntrepriseService;
 import com.example.appspring.services.InformationPersoService;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class repository {
     private Connection connection;
 
-    public repository(String url, String user, String password) throws SQLException {
-        this.connection = DriverManager.getConnection(url, user, password);
+    public repository(Connection connection) {
+        this.connection = connection;
     }
 
-    public void close() throws SQLException {
-        if (connection != null) {
-            connection.close();
+    public void close() {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -38,4 +41,3 @@ public class repository {
         return new CompetenceService(connection);
     }
 }
-
