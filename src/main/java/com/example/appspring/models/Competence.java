@@ -1,6 +1,6 @@
 package com.example.appspring.models;
 
-public class Competencse {
+public class Competence {
     private int competanceId;
     private String competanceName;
 
