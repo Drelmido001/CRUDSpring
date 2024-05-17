@@ -2,26 +2,35 @@ package com.example.appspring.datasource;
 
 import com.example.appspring.models.informationperso;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InformationPersoDao {
     private Connection connection;
 
-    public InformationPersoDao(Connection connection) {
+        public InformationPersoDao(Connection connection) {
         this.connection = connection;
     }
 
-    public void create(informationperso informationPerso) throws SQLException {
-        String query = "INSERT INTO information_perso (fullname, email) VALUES (?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, informationPerso.getFullName());
-            statement.setString(2, informationPerso.getEmail());
-            statement.executeUpdate();
+    public int createWithAllAttributes(informationperso informationPerso) throws SQLException {
+        String query = "INSERT INTO information_perso (id_info, fullName, email) VALUES (?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1, informationPerso.getId_info());
+            statement.setString(2, informationPerso.getFullName());
+            statement.setString(3, informationPerso.getEmail());
+
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Creating InformationPerso failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1);
+                } else {
+                    throw new SQLException("Creating InformationPerso failed, no ID obtained.");
+                }
+            }
         }
     }
 
@@ -32,9 +41,9 @@ public class InformationPersoDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     informationperso informationPerso = new informationperso();
-                    informationPerso.setId_info(resultSet.getInt("id_info"));
-                    informationPerso.setFullName(resultSet.getString("fullname"));
-                    informationPerso.setEmail(resultSet.getString("email"));
+                    informationPerso.setId_info(resultSet.getInt(1));
+                    informationPerso.setFullName(resultSet.getString(2));
+                    informationPerso.setEmail(resultSet.getString(3));
                     return informationPerso;
                 }
             }
@@ -49,9 +58,9 @@ public class InformationPersoDao {
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 informationperso informationPerso = new informationperso();
-                informationPerso.setId_info(resultSet.getInt("id_info"));
-                informationPerso.setFullName(resultSet.getString("fullname"));
-                informationPerso.setEmail(resultSet.getString("email"));
+                informationPerso.setId_info(resultSet.getInt(1));
+                informationPerso.setFullName(resultSet.getString(2));
+                informationPerso.setEmail(resultSet.getString(3));
                 informationPersos.add(informationPerso);
             }
         }
@@ -59,7 +68,7 @@ public class InformationPersoDao {
     }
 
     public void update(informationperso informationPerso) throws SQLException {
-        String query = "UPDATE information_perso SET fullname = ?, email = ? WHERE id_info = ?";
+        String query = "UPDATE information_perso SET fullName = ?, email = ? WHERE id_info = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, informationPerso.getFullName());
             statement.setString(2, informationPerso.getEmail());

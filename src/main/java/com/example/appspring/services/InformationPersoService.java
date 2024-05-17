@@ -17,7 +17,7 @@ public class InformationPersoService {
     }
 
     public void createInformationPerso(informationperso informationPerso) throws SQLException {
-        informationPersoDao.create(informationPerso);
+        informationPersoDao.createWithAllAttributes(informationPerso);
     }
 
     public informationperso getInformationPersoById(int id) throws SQLException {

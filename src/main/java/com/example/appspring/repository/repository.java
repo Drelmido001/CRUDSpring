@@ -6,21 +6,20 @@ import com.example.appspring.services.EntrepriseService;
 import com.example.appspring.services.InformationPersoService;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class repository {
-    private Connection connection;
+    private final Connection connection;
 
     public repository(Connection connection) {
         this.connection = connection;
     }
 
-    public void close() {
+    public void closeConnection() {
         try {
             if (connection != null) {
                 connection.close();
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

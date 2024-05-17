@@ -18,7 +18,6 @@ public class Cv {
         this.entreprises = entreprises;
     }
 
-    // Getters et setters pour les nouveaux attributs
     public informationperso getInformationPerso() {
         return informationPerso;
     }
@@ -43,7 +42,6 @@ public class Cv {
         this.entreprises = entreprises;
     }
 
-    // Reste du code inchangé
     public int getId() {
         return id;
     }

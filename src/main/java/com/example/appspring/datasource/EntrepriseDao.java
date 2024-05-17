@@ -32,9 +32,9 @@ public class EntrepriseDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Entreprise entreprise = new Entreprise();
-                    entreprise.setIdEntreprise(resultSet.getInt("idEntreprise"));
-                    entreprise.setNom(resultSet.getString("nom"));
-                    entreprise.setEmailEntreprise(resultSet.getString("emailEntreprise"));
+                    entreprise.setIdEntreprise(resultSet.getInt(1));
+                    entreprise.setNom(resultSet.getString(2));
+                    entreprise.setEmailEntreprise(resultSet.getString(3));
                     return entreprise;
                 }
             }
@@ -49,9 +49,9 @@ public class EntrepriseDao {
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Entreprise entreprise = new Entreprise();
-                entreprise.setIdEntreprise(resultSet.getInt("idEntreprise"));
-                entreprise.setNom(resultSet.getString("nom"));
-                entreprise.setEmailEntreprise(resultSet.getString("emailEntreprise"));
+                entreprise.setIdEntreprise(resultSet.getInt(1));
+                entreprise.setNom(resultSet.getString(2));
+                entreprise.setEmailEntreprise(resultSet.getString(3));
                 entreprises.add(entreprise);
             }
         }
@@ -69,10 +69,17 @@ public class EntrepriseDao {
     }
 
     public void delete(int id) throws SQLException {
-        String query = "DELETE FROM entreprise WHERE idEntreprise = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
+        String deleteReferencesQuery = "DELETE FROM cv_entreprise WHERE entreprise_id = ?";
+        try (PreparedStatement deleteReferencesStatement = connection.prepareStatement(deleteReferencesQuery)) {
+            deleteReferencesStatement.setInt(1, id);
+            deleteReferencesStatement.executeUpdate();
+        }
+
+        String deleteEntrepriseQuery = "DELETE FROM entreprise WHERE idEntreprise = ?";
+        try (PreparedStatement deleteEntrepriseStatement = connection.prepareStatement(deleteEntrepriseQuery)) {
+            deleteEntrepriseStatement.setInt(1, id);
+            deleteEntrepriseStatement.executeUpdate();
         }
     }
+
 }

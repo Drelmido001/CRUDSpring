@@ -1,7 +1,6 @@
 package com.example.appspring.datasource;
 
 import com.example.appspring.models.Competence;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +16,7 @@ public class CompetenceDao {
     }
 
     public void create(Competence competence) throws SQLException {
-        String query = "INSERT INTO competence (competanceName) VALUES (?)";
+        String query = "INSERT INTO competence (competence_nom) VALUES (?)";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, competence.getCompetanceName());
             statement.executeUpdate();
@@ -25,14 +24,14 @@ public class CompetenceDao {
     }
 
     public Competence getById(int id) throws SQLException {
-        String query = "SELECT * FROM competence WHERE competanceId = ?";
+        String query = "SELECT * FROM competence WHERE competence_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Competence competence = new Competence();
-                    competence.setCompetanceId(resultSet.getInt("competanceId"));
-                    competence.setCompetanceName(resultSet.getString("competanceName"));
+                    competence.setCompetanceId(resultSet.getInt(1));
+                    competence.setCompetanceName(resultSet.getString(2));
                     return competence;
                 }
             }
@@ -47,8 +46,8 @@ public class CompetenceDao {
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Competence competence = new Competence();
-                competence.setCompetanceId(resultSet.getInt("competanceId"));
-                competence.setCompetanceName(resultSet.getString("competanceName"));
+                competence.setCompetanceId(resultSet.getInt(1));
+                competence.setCompetanceName(resultSet.getString(2));
                 competences.add(competence);
             }
         }
@@ -56,7 +55,7 @@ public class CompetenceDao {
     }
 
     public void update(Competence competence) throws SQLException {
-        String query = "UPDATE competence SET competanceName = ? WHERE competanceId = ?";
+        String query = "UPDATE competence SET competence_nom = ? WHERE competence_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, competence.getCompetanceName());
             statement.setInt(2, competence.getCompetanceId());
@@ -65,10 +64,17 @@ public class CompetenceDao {
     }
 
     public void delete(int id) throws SQLException {
-        String query = "DELETE FROM competence WHERE competanceId = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
+        String deleteReferencesQuery = "DELETE FROM cv_competence WHERE competence_id = ?";
+        try (PreparedStatement deleteReferencesStatement = connection.prepareStatement(deleteReferencesQuery)) {
+            deleteReferencesStatement.setInt(1, id);
+            deleteReferencesStatement.executeUpdate();
+        }
+
+        String deleteCompetenceQuery = "DELETE FROM competence WHERE competence_id = ?";
+        try (PreparedStatement deleteCompetenceStatement = connection.prepareStatement(deleteCompetenceQuery)) {
+            deleteCompetenceStatement.setInt(1, id);
+            deleteCompetenceStatement.executeUpdate();
         }
     }
+
 }

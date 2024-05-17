@@ -16,8 +16,9 @@ public class CvService {
         this.cvDao = new CvDao(connection);
     }
 
+
     public void createCv(Cv cv) throws SQLException {
-        cvDao.create(cv);
+        cvDao.createCv(cv);
     }
 
     public Cv getCvById(int id) throws SQLException {

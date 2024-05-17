@@ -4,9 +4,7 @@ public class Competence {
     private int competanceId;
     private String competanceName;
 
-    // Constructeurs
 
-    // Getters et Setters
     public int getCompetanceId() {
         return competanceId;
     }
