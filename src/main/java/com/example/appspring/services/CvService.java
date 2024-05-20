@@ -12,9 +12,9 @@ import java.util.List;
 public class CvService {
     private CvDao cvDao;
 
-    public CvService(Connection connection) {
-        this.cvDao = new CvDao(connection);
-    }
+        public CvService(Connection connection) {
+            this.cvDao = new CvDao(connection);
+        }
 
 
     public void createCv(Cv cv) throws SQLException {

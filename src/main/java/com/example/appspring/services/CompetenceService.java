@@ -1,7 +1,9 @@
 package com.example.appspring.services;
 
 import com.example.appspring.datasource.CompetenceDao;
+import com.example.appspring.exception.RequestException;
 import com.example.appspring.models.Competence;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
@@ -17,11 +19,18 @@ public class CompetenceService {
     }
 
     public void createCompetence(Competence competence) throws SQLException {
+        if(competence.getCompetanceName()==null){
+            throw new RequestException("Id is null", HttpStatus.CONFLICT);
+        }else{
         competenceDao.create(competence);
-    }
+    }}
 
     public Competence getCompetenceById(int id) throws SQLException {
-        return competenceDao.getById(id);
+        if(id == 0){
+            throw new RequestException("Id is null", HttpStatus.BAD_REQUEST);
+        }else {
+            return  competenceDao.getById(id);
+        }
     }
 
     public List<Competence> getAllCompetences() throws SQLException {

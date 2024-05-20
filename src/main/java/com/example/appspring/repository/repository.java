@@ -14,16 +14,6 @@ public class repository {
         this.connection = connection;
     }
 
-    public void closeConnection() {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public CvService getCvService() {
         return new CvService(connection);
     }
