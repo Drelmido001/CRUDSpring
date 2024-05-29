@@ -21,6 +21,8 @@ public class CompetenceController {
 
     @GetMapping
     public List<Competence> getAllCompetences() throws SQLException {
+        System.out.println("salam");
+
         return competenceService.getAllCompetences();
     }
 
